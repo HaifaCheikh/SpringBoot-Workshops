@@ -3,6 +3,7 @@ package org.example.springproject.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,12 @@ public class Sponsor {
     private Float budgetAnnuel;
 
     private Boolean bloquerContrat;
+
+    Boolean archived;
+
+    LocalDate dateCreation;
+
+    LocalDate dateDerniereModification;
 
     @OneToMany(mappedBy = "sponsor")
     private List<Contrat> contrats;
