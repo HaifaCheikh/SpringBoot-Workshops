@@ -1,19 +1,45 @@
 package org.example.springproject.Services;
-import org.example.springproject.Entities.Equipe;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.example.springproject.Entities.Equipe;
 import org.example.springproject.Repository.EquipeRepository;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class EquipeService implements IEquipeService {
 
-    EquipeRepository equipeRepository;
+    private EquipeRepository equipeRepository;
 
     @Override
     public Equipe ajouterEquipe(Equipe equipe) {
         return equipeRepository.save(equipe);
     }
-}
 
+    @Override
+    public List<Equipe> ajouterEquipes(List<Equipe> equipes) {
+        return equipeRepository.saveAll(equipes);
+    }
+
+    @Override
+    public Equipe modifierEquipe(Equipe equipe) {
+        return equipeRepository.save(equipe);
+    }
+
+    @Override
+    public void supprimerEquipe(Long idEquipe) {
+        equipeRepository.deleteById(idEquipe);
+    }
+
+    @Override
+    public List<Equipe> listEquipes() {
+        return equipeRepository.findAll();
+    }
+
+    @Override
+    public Equipe recupererEquipe(Long idEquipe) {
+        return equipeRepository.findById(idEquipe).orElse(null);
+    }
+}
