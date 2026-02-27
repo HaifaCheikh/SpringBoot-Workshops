@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.example.springproject.Entities.Sponsor;
 import org.example.springproject.Repository.SponsorRepository;
-
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,16 +15,27 @@ public class SponsorService implements ISponsorService {
 
     @Override
     public Sponsor ajouterSponsor(Sponsor sponsor) {
+        // Initialisation automatique
+        sponsor.setDateCreation(LocalDate.now());
+        sponsor.setArchived(false);
+        sponsor.setBloquerContrat(false);
         return sponsorRepository.save(sponsor);
     }
 
     @Override
     public List<Sponsor> ajouterSponsors(List<Sponsor> sponsors) {
+        sponsors.forEach(s -> {
+            s.setDateCreation(LocalDate.now());
+            s.setArchived(false);
+            s.setBloquerContrat(false);
+        });
         return sponsorRepository.saveAll(sponsors);
     }
 
     @Override
     public Sponsor modifierSponsor(Sponsor sponsor) {
+        // dateDerniereModification initialisée automatiquement
+        sponsor.setDateDerniereModification(LocalDate.now());
         return sponsorRepository.save(sponsor);
     }
 

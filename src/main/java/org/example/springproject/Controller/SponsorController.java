@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.example.springproject.Entities.Sponsor;
 import org.example.springproject.Services.ISponsorService;
-
 import java.util.List;
 
 @RestController
@@ -14,28 +13,45 @@ public class SponsorController {
 
     private ISponsorService sponsorService;
 
-    @GetMapping
-    public List<Sponsor> list() {
-        return sponsorService.listSponsors();
-    }
-
-    @GetMapping("/{id}")
-    public Sponsor get(@PathVariable Long id) {
-        return sponsorService.recupererSponsor(id);
-    }
-
-    @PostMapping
-    public Sponsor add(@RequestBody Sponsor sponsor) {
+    // POST /api/sponsors/add
+    @PostMapping("/add")
+    public Sponsor ajouterSponsor(@RequestBody Sponsor sponsor) {
         return sponsorService.ajouterSponsor(sponsor);
     }
 
-    @PutMapping
-    public Sponsor update(@RequestBody Sponsor sponsor) {
+    // POST /api/sponsors/addAll
+    @PostMapping("/addAll")
+    public List<Sponsor> ajouterSponsors(@RequestBody List<Sponsor> sponsors) {
+        return sponsorService.ajouterSponsors(sponsors);
+    }
+
+    // PUT /api/sponsors/update
+    @PutMapping("/update")
+    public Sponsor modifierSponsor(@RequestBody Sponsor sponsor) {
         return sponsorService.modifierSponsor(sponsor);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        sponsorService.supprimerSponsor(id);
+    // DELETE /api/sponsors/delete/{id}
+    @DeleteMapping("/delete/{idSponsor}")
+    public void supprimerSponsor(@PathVariable Long idSponsor) {
+        sponsorService.supprimerSponsor(idSponsor);
+    }
+
+    // GET /api/sponsors/all
+    @GetMapping("/all")
+    public List<Sponsor> listSponsors() {
+        return sponsorService.listSponsors();
+    }
+
+    // GET /api/sponsors/get/{id}
+    @GetMapping("/get/{idSponsor}")
+    public Sponsor recupererSponsor(@PathVariable Long idSponsor) {
+        return sponsorService.recupererSponsor(idSponsor);
+    }
+
+    // PUT /api/sponsors/archiver/{id}
+    @PutMapping("/archiver/{idSponsor}")
+    public Boolean archiverSponsor(@PathVariable Long idSponsor) {
+        return sponsorService.archiverSponsor(idSponsor);
     }
 }

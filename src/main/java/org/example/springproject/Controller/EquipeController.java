@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.example.springproject.Entities.Equipe;
 import org.example.springproject.Services.IEquipeService;
-
 import java.util.List;
 
 @RestController
@@ -14,28 +13,33 @@ public class EquipeController {
 
     private IEquipeService equipeService;
 
-    @GetMapping
-    public List<Equipe> list() {
-        return equipeService.listEquipes();
-    }
-
-    @GetMapping("/{id}")
-    public Equipe get(@PathVariable Long id) {
-        return equipeService.recupererEquipe(id);
-    }
-
-    @PostMapping
-    public Equipe add(@RequestBody Equipe equipe) {
+    // POST /api/equipes/add
+    @PostMapping("/add")
+    public Equipe ajouterEquipe(@RequestBody Equipe equipe) {
         return equipeService.ajouterEquipe(equipe);
     }
 
-    @PutMapping
-    public Equipe update(@RequestBody Equipe equipe) {
+    // GET /api/equipes/all
+    @GetMapping("/all")
+    public List<Equipe> listEquipes() {
+        return equipeService.listEquipes();
+    }
+
+    // GET /api/equipes/get/{id}
+    @GetMapping("/get/{id}")
+    public Equipe recupererEquipe(@PathVariable Long id) {
+        return equipeService.recupererEquipe(id);
+    }
+
+    // PUT /api/equipes/update
+    @PutMapping("/update")
+    public Equipe modifierEquipe(@RequestBody Equipe equipe) {
         return equipeService.modifierEquipe(equipe);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    // DELETE /api/equipes/delete/{id}
+    @DeleteMapping("/delete/{id}")
+    public void supprimerEquipe(@PathVariable Long id) {
         equipeService.supprimerEquipe(id);
     }
 }

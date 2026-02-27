@@ -4,16 +4,9 @@ import org.example.springproject.Entities.Pilote;
 import java.util.List;
 
 public interface IPiloteService {
-
-    Pilote ajouterPilote(Pilote pilote);
-
-    List<Pilote> ajouterPilotes(List<Pilote> pilotes);
-
-    Pilote modifierPilote(Pilote pilote);
-
-    void supprimerPilote(Long idPilote);
-
+    String addPilote(Pilote p);
     List<Pilote> listPilotes();
-
     Pilote recupererPilote(Long idPilote);
+    Pilote modifierPilote(Pilote pilote);
+    void supprimerPilote(Long idPilote);
 }

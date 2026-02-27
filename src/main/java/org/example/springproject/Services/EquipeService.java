@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.example.springproject.Entities.Equipe;
 import org.example.springproject.Repository.EquipeRepository;
-
 import java.util.List;
 
 @Service
@@ -19,8 +18,13 @@ public class EquipeService implements IEquipeService {
     }
 
     @Override
-    public List<Equipe> ajouterEquipes(List<Equipe> equipes) {
-        return equipeRepository.saveAll(equipes);
+    public List<Equipe> listEquipes() {
+        return equipeRepository.findAll();
+    }
+
+    @Override
+    public Equipe recupererEquipe(Long idEquipe) {
+        return equipeRepository.findById(idEquipe).orElse(null);
     }
 
     @Override
@@ -31,15 +35,5 @@ public class EquipeService implements IEquipeService {
     @Override
     public void supprimerEquipe(Long idEquipe) {
         equipeRepository.deleteById(idEquipe);
-    }
-
-    @Override
-    public List<Equipe> listEquipes() {
-        return equipeRepository.findAll();
-    }
-
-    @Override
-    public Equipe recupererEquipe(Long idEquipe) {
-        return equipeRepository.findById(idEquipe).orElse(null);
     }
 }

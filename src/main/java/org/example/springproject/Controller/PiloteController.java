@@ -1,11 +1,9 @@
 package org.example.springproject.Controller;
 
 import lombok.AllArgsConstructor;
-import org.example.springproject.Services.IPiloteService;
 import org.springframework.web.bind.annotation.*;
 import org.example.springproject.Entities.Pilote;
-import org.example.springproject.Services.IPositionService;
-
+import org.example.springproject.Services.IPiloteService;
 import java.util.List;
 
 @RestController
@@ -15,28 +13,34 @@ public class PiloteController {
 
     private IPiloteService piloteService;
 
-    @GetMapping
-    public List<Pilote> list() {
+    // POST /api/pilotes/add
+    @PostMapping("/add")
+    public String addPilote(@RequestBody Pilote pilote) {
+        return piloteService.addPilote(pilote);
+    }
+
+    // GET /api/pilotes/all
+    @GetMapping("/all")
+    public List<Pilote> listPilotes() {
         return piloteService.listPilotes();
     }
 
-    @GetMapping("/{id}")
-    public Pilote get(@PathVariable Long id) {
+    // GET /api/pilotes/get/{id}
+    @GetMapping("/get/{id}")
+    public Pilote recupererPilote(@PathVariable Long id) {
         return piloteService.recupererPilote(id);
     }
 
-    @PostMapping
-    public Pilote add(@RequestBody Pilote pilote) {
-        return piloteService.ajouterPilote(pilote);
-    }
-
-    @PutMapping
-    public Pilote update(@RequestBody Pilote pilote) {
+    // PUT /api/pilotes/update
+    @PutMapping("/update")
+    public Pilote modifierPilote(@RequestBody Pilote pilote) {
         return piloteService.modifierPilote(pilote);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    // DELETE /api/pilotes/delete/{id}
+    @DeleteMapping("/delete/{id}")
+    public void supprimerPilote(@PathVariable Long id) {
         piloteService.supprimerPilote(id);
     }
 }
+
