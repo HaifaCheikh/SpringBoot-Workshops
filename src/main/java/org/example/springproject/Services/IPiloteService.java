@@ -9,4 +9,7 @@ public interface IPiloteService {
     Pilote recupererPilote(Long idPilote);
     Pilote modifierPilote(Pilote pilote);
     void supprimerPilote(Long idPilote);
-}
+
+    Pilote affecterPiloteAEquipe(Long idPilote, Long idEquipe);
+
+    }

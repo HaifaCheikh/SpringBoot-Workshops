@@ -19,8 +19,10 @@ public class Contrat {
     private Boolean archived;
 
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Sponsor sponsor;
 
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Equipe equipe;
 }

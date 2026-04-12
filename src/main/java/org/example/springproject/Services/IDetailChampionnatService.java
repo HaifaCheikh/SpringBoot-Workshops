@@ -16,4 +16,6 @@ public interface IDetailChampionnatService {
     List<DetailChampionnat> listDetailChampionnats();
 
     DetailChampionnat recupererDetailChampionnat(Long idDetail);
+
+    DetailChampionnat ajouterEtaffecterDetailChampionnatAChampionnat(DetailChampionnat dc, Long idChampionnat);
 }

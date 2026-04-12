@@ -17,8 +17,10 @@ public class Position {
     private Integer nbrPoints;
 
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Pilote pilote;
 
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Course course;
 }

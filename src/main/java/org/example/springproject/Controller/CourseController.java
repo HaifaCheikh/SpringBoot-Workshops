@@ -10,33 +10,37 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/courses")
 @AllArgsConstructor
-
 public class CourseController {
 
     private ICourseService courseService;
 
-    @GetMapping
-    public List<Course> list() {
-        return courseService.listCourses();
-    }
-
-    @GetMapping("/{id}")
-    public Course get(@PathVariable Long id) {
-        return courseService.recupererCourse(id);
-    }
-
     @PostMapping
-    public Course add(@RequestBody Course course) {
+    public Course ajouterCourse(@RequestBody Course course) {
         return courseService.ajouterCourse(course);
     }
 
+    @PostMapping("/all")
+    public List<Course> ajouterCourses(@RequestBody List<Course> courses) {
+        return courseService.ajouterCourses(courses);
+    }
+
     @PutMapping
-    public Course update(@RequestBody Course course) {
+    public Course modifierCourse(@RequestBody Course course) {
         return courseService.modifierCourse(course);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        courseService.supprimerCourse(id);
+    public void supprimerCourse(@PathVariable("id") Long idCourse) {
+        courseService.supprimerCourse(idCourse);
+    }
+
+    @GetMapping
+    public List<Course> listCourses() {
+        return courseService.listCourses();
+    }
+
+    @GetMapping("/{id}")
+    public Course recupererCourse(@PathVariable("id") Long idCourse) {
+        return courseService.recupererCourse(idCourse);
     }
 }

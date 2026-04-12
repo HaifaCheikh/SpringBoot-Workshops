@@ -39,4 +39,13 @@ public class ContratController {
     public void delete(@PathVariable Long id) {
         contratService.supprimerContrat(id);
     }
+
+    @PostMapping("/addAndAffect/{idEquipe}/{idSponsor}")
+    public Contrat addAndAffect(
+            @RequestBody Contrat contrat,
+            @PathVariable Long idEquipe,
+            @PathVariable Long idSponsor) {
+        return contratService
+                .ajoutContratEtAffecterASponsorEtEquipe(contrat, idEquipe, idSponsor);
+    }
 }

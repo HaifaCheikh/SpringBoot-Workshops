@@ -20,6 +20,7 @@ public class Course {
     private LocalDate dateCourse;
 
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Championnat championnat;
 
     @OneToMany(mappedBy = "course")

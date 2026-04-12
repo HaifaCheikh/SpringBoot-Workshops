@@ -8,7 +8,7 @@ import org.example.springproject.Services.IDetailChampionnatService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/detailchampionnats")
+@RequestMapping("/api/details")
 @AllArgsConstructor
 public class DetailChampionnatController {
 
@@ -38,4 +38,13 @@ public class DetailChampionnatController {
     public void delete(@PathVariable Long id) {
         detailChampionnatService.supprimerDetailChampionnat(id);
     }
+
+    @PostMapping("/addAndAffect/{idChampionnat}")
+    public DetailChampionnat addAndAffect(
+            @RequestBody DetailChampionnat dc,
+            @PathVariable Long idChampionnat) {
+        return detailChampionnatService
+                .ajouterEtaffecterDetailChampionnatAChampionnat(dc, idChampionnat);
+    }
+
 }

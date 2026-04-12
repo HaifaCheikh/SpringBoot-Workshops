@@ -42,4 +42,13 @@ public class ChampionnatService implements IChampionnatService {
     public Championnat recupererChampionnat(Long idChampionnat) {
         return championnatRepository.findById(idChampionnat).orElse(null);
     }
+
+    @Override
+    public Championnat addChampionnatAndAssociatedCourses(Championnat championnat) {
+        if (championnat.getCourses() != null) {
+            championnat.getCourses().forEach(c -> c.setChampionnat(championnat));
+        }
+        return championnatRepository.save(championnat);
+    }
+
 }

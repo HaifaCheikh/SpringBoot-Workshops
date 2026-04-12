@@ -16,4 +16,6 @@ public interface IChampionnatService {
     List<Championnat> listChampionnats();
 
     Championnat recupererChampionnat(Long idChampionnat);
+
+    Championnat addChampionnatAndAssociatedCourses(Championnat championnat);
 }

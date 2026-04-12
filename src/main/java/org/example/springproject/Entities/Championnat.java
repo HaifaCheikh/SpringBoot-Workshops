@@ -21,6 +21,11 @@ public class Championnat {
 
     private Integer annee;
 
-    @OneToMany(mappedBy = "championnat")
+    @OneToMany(mappedBy = "championnat", cascade = CascadeType.ALL)
     private List<Course> courses;
+
+    @OneToOne(mappedBy = "championnat")
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private DetailChampionnat detailChampionnat;
+
 }

@@ -1,9 +1,11 @@
 package org.example.springproject.Services;
 
 import lombok.AllArgsConstructor;
+import org.example.springproject.Entities.Equipe;
 import org.springframework.stereotype.Service;
 import org.example.springproject.Entities.Pilote;
 import org.example.springproject.Repository.PiloteRepository;
+import org.example.springproject.Repository.EquipeRepository;
 import java.util.List;
 
 @Service
@@ -11,6 +13,7 @@ import java.util.List;
 public class PiloteService implements IPiloteService {
 
     private PiloteRepository piloteRepository;
+    private EquipeRepository equipeRepository;
 
     @Override
     public String addPilote(Pilote p) {
@@ -37,4 +40,16 @@ public class PiloteService implements IPiloteService {
     public void supprimerPilote(Long idPilote) {
         piloteRepository.deleteById(idPilote);
     }
+
+    @Override
+    public Pilote affecterPiloteAEquipe(Long idPilote, Long idEquipe) {
+        Pilote pilote = piloteRepository.findById(idPilote).orElse(null);
+        Equipe equipe = equipeRepository.findById(idEquipe).orElse(null);
+        if (pilote != null && equipe != null) {
+            pilote.setEquipe(equipe);
+            return piloteRepository.save(pilote);
+        }
+        return null;
+    }
+
 }

@@ -23,11 +23,11 @@ public class Sponsor {
 
     private Boolean bloquerContrat;
 
-    Boolean archived;
+    private Boolean archived;
 
-    LocalDate dateCreation;
+    private LocalDate dateCreation;
 
-    LocalDate dateDerniereModification;
+    private LocalDate dateDerniereModification;
 
     @OneToMany(mappedBy = "sponsor")
     private List<Contrat> contrats;

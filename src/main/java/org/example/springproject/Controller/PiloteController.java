@@ -42,5 +42,12 @@ public class PiloteController {
     public void supprimerPilote(@PathVariable Long id) {
         piloteService.supprimerPilote(id);
     }
-}
 
+    @PutMapping("/affecter/{idPilote}/{idEquipe}")
+    public Pilote affecterPiloteAEquipe(
+            @PathVariable Long idPilote,
+            @PathVariable Long idEquipe) {
+        return piloteService.affecterPiloteAEquipe(idPilote, idEquipe);
+    }
+
+}

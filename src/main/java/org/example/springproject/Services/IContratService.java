@@ -16,4 +16,7 @@ public interface IContratService {
     List<Contrat> listContrats();
 
     Contrat recupererContrat(Long idContrat);
+
+    Contrat ajoutContratEtAffecterASponsorEtEquipe(Contrat contrat, Long idEquipe, Long idSponsor);
 }
+

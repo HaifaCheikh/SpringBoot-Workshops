@@ -21,6 +21,7 @@ public class Pilote {
     private Integer classementGeneral;
 
     @ManyToOne
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Equipe equipe;
 
     @OneToMany(mappedBy = "pilote")

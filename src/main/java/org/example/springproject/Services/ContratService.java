@@ -1,9 +1,13 @@
 package org.example.springproject.Services;
 
 import lombok.AllArgsConstructor;
+import org.example.springproject.Entities.Equipe;
+import org.example.springproject.Entities.Sponsor;
 import org.springframework.stereotype.Service;
 import org.example.springproject.Entities.Contrat;
 import org.example.springproject.Repository.ContratRepository;
+import org.example.springproject.Repository.EquipeRepository;
+import org.example.springproject.Repository.SponsorRepository;
 
 import java.util.List;
 
@@ -12,6 +16,8 @@ import java.util.List;
 public class ContratService implements IContratService {
 
     private ContratRepository contratRepository;
+    private EquipeRepository equipeRepository;
+    private SponsorRepository sponsorRepository;
 
     @Override
     public Contrat ajouterContrat(Contrat contrat) {
@@ -42,4 +48,14 @@ public class ContratService implements IContratService {
     public Contrat recupererContrat(Long idContrat) {
         return contratRepository.findById(idContrat).orElse(null);
     }
+
+    @Override
+    public Contrat ajoutContratEtAffecterASponsorEtEquipe(Contrat contrat, Long idEquipe, Long idSponsor) {
+        Equipe equipe = equipeRepository.findById(idEquipe).orElse(null);
+        Sponsor sponsor = sponsorRepository.findById(idSponsor).orElse(null);
+        contrat.setEquipe(equipe);
+        contrat.setSponsor(sponsor);
+        return contratRepository.save(contrat);
+    }
+
 }

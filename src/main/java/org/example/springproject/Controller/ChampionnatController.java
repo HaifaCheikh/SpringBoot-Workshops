@@ -48,4 +48,10 @@ public class ChampionnatController {
     public void delete(@PathVariable("id") Long id) {
         championnatService.supprimerChampionnat(id);
     }
+
+    @PostMapping("/addWithCourses")
+    public Championnat addWithCourses(@RequestBody Championnat championnat) {
+        return championnatService.addChampionnatAndAssociatedCourses(championnat);
+    }
+
 }
