@@ -52,4 +52,38 @@ public class PiloteService implements IPiloteService {
         return null;
     }
 
+    @Override
+    public void mettreAJourPointsEtClassement() {
+        int anneeCourrante = java.time.LocalDate.now().getYear();
+
+        List<Pilote> pilotes = piloteRepository.findAll();
+
+        // Calculer les points de chaque pilote
+        // (somme des nbrPoints dans ses positions pour l'année en cours)
+        pilotes.forEach(pilote -> {
+            if (pilote.getPositions() != null) {
+                int totalPoints = pilote.getPositions().stream()
+                        .filter(pos -> pos.getCourse() != null
+                                && pos.getCourse().getDateCourse() != null
+                                && pos.getCourse().getDateCourse().getYear() == anneeCourrante)
+                        .mapToInt(pos -> pos.getNbrPoints() == null ? 0 : pos.getNbrPoints())
+                        .sum();
+                pilote.setNbrPointsTotal(totalPoints);
+                piloteRepository.save(pilote);
+            }
+        });
+
+        // Mettre à jour le classement en triant par points décroissants
+        List<Pilote> pilotsTriés = piloteRepository.findAll().stream()
+                .sorted((p1, p2) -> Integer.compare(
+                        p2.getNbrPointsTotal() == null ? 0 : p2.getNbrPointsTotal(),
+                        p1.getNbrPointsTotal() == null ? 0 : p1.getNbrPointsTotal()))
+                .collect(java.util.stream.Collectors.toList());
+
+        for (int i = 0; i < pilotsTriés.size(); i++) {
+            pilotsTriés.get(i).setClassementGeneral(i + 1);
+            piloteRepository.save(pilotsTriés.get(i));
+        }
+    }
+
 }

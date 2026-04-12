@@ -18,4 +18,7 @@ public interface IChampionnatService {
     Championnat recupererChampionnat(Long idChampionnat);
 
     Championnat addChampionnatAndAssociatedCourses(Championnat championnat);
+
+    String affecterCourseAChampionnat(Long idCourse, Long idChampionnat);
+
 }

@@ -58,4 +58,27 @@ public class ContratService implements IContratService {
         return contratRepository.save(contrat);
     }
 
+    @Override
+    public void archiverContratsExpires() {
+        int anneeCourrante = java.time.LocalDate.now().getYear();
+        List<Contrat> tousLesContrats = contratRepository.findAll();
+        tousLesContrats.forEach(c -> {
+            if (c.getAnnee() != null &&
+                    Integer.parseInt(c.getAnnee()) < anneeCourrante) {
+                c.setArchived(true);
+                contratRepository.save(c);
+            }
+        });
+    }
+
+    @Override
+    public List<Contrat> getContratsActifs() {
+        int anneeCourrante = java.time.LocalDate.now().getYear();
+        return contratRepository.findAll().stream()
+                .filter(c -> c.getAnnee() != null &&
+                        Integer.parseInt(c.getAnnee()) >= anneeCourrante &&
+                        Boolean.FALSE.equals(c.getArchived()))
+                .collect(java.util.stream.Collectors.toList());
+    }
+
 }

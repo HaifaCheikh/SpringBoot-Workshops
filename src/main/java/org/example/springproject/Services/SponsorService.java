@@ -64,4 +64,24 @@ public class SponsorService implements ISponsorService {
         }
         return false;
     }
+
+    @Override
+    public Float pourcentageBudgetAnnuelConsomme(Long idSponsor) {
+        Sponsor sponsor = sponsorRepository.findById(idSponsor).orElse(null);
+        if (sponsor == null || sponsor.getBudgetAnnuel() == null
+                || sponsor.getBudgetAnnuel() == 0) {
+            return 0f;
+        }
+        int anneeCourrante = java.time.LocalDate.now().getYear();
+
+        // Somme des montants des contrats de l'année en cours
+        float totalDepense = sponsor.getContrats() == null ? 0f
+                : sponsor.getContrats().stream()
+                        .filter(c -> c.getAnnee() != null &&
+                                Integer.parseInt(c.getAnnee()) == anneeCourrante)
+                        .map(c -> c.getMontant() == null ? 0f : c.getMontant())
+                        .reduce(0f, Float::sum);
+
+        return (totalDepense / sponsor.getBudgetAnnuel()) * 100;
+    }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/championnats")
 
-
 public class ChampionnatController {
 
     private final IChampionnatService championnatService;
@@ -52,6 +51,13 @@ public class ChampionnatController {
     @PostMapping("/addWithCourses")
     public Championnat addWithCourses(@RequestBody Championnat championnat) {
         return championnatService.addChampionnatAndAssociatedCourses(championnat);
+    }
+
+    @PutMapping("/affecterCourse/{idCourse}/{idChampionnat}")
+    public String affecterCourse(
+            @PathVariable Long idCourse,
+            @PathVariable Long idChampionnat) {
+        return championnatService.affecterCourseAChampionnat(idCourse, idChampionnat);
     }
 
 }

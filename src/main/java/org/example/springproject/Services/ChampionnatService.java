@@ -3,7 +3,9 @@ package org.example.springproject.Services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.example.springproject.Entities.Championnat;
+import org.example.springproject.Entities.Course;
 import org.example.springproject.Repository.ChampionnatRepository;
+import org.example.springproject.Repository.CourseRepository;
 
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
 public class ChampionnatService implements IChampionnatService {
 
     private ChampionnatRepository championnatRepository;
+    private CourseRepository courseRepository;
 
     @Override
     public Championnat ajouterChampionnat(Championnat championnat) {
@@ -49,6 +52,20 @@ public class ChampionnatService implements IChampionnatService {
             championnat.getCourses().forEach(c -> c.setChampionnat(championnat));
         }
         return championnatRepository.save(championnat);
+    }
+
+    @Override
+    public String affecterCourseAChampionnat(Long idCourse, Long idChampionnat) {
+        Championnat championnat = championnatRepository
+                .findById(idChampionnat).orElse(null);
+        Course course = courseRepository
+                .findById(idCourse).orElse(null);
+        if (championnat != null && course != null) {
+            course.setChampionnat(championnat);
+            courseRepository.save(course);
+            return "Course affectée avec succès au championnat";
+        }
+        return "Erreur : championnat ou course introuvable";
     }
 
 }
