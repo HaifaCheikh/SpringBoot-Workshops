@@ -8,6 +8,8 @@ import org.example.springproject.Entities.Contrat;
 import org.example.springproject.Repository.ContratRepository;
 import org.example.springproject.Repository.EquipeRepository;
 import org.example.springproject.Repository.SponsorRepository;
+import org.example.springproject.DTO.ContratDto;
+
 
 import java.util.List;
 
@@ -79,6 +81,42 @@ public class ContratService implements IContratService {
                         Integer.parseInt(c.getAnnee()) >= anneeCourrante &&
                         Boolean.FALSE.equals(c.getArchived()))
                 .collect(java.util.stream.Collectors.toList());
+    }
+
+    @Override
+    public ContratDto ajoutContratEtAffecterASponsorEtEquipe(
+            Contrat contrat,
+            String libelleEquipe,
+            String nomSponsor,
+            String pays) {
+
+        Equipe equipe = equipeRepository.findAll()
+                .stream()
+                .filter(e -> e.getLibelle().equals(libelleEquipe))
+                .findFirst()
+                .orElse(null);
+
+        Sponsor sponsor = sponsorRepository.findAll()
+                .stream()
+                .filter(s -> s.getNom().equals(nomSponsor)
+                        && s.getPays().equals(pays))
+                .findFirst()
+                .orElse(null);
+
+        if (equipe != null && sponsor != null) {
+            contrat.setEquipe(equipe);
+            contrat.setSponsor(sponsor);
+        }
+        Contrat savedContrat = contratRepository.save(contrat);
+
+        ContratDto dto = new ContratDto();
+        dto.setIdContrat(savedContrat.getIdContrat());
+        dto.setMontant(savedContrat.getMontant());
+        dto.setAnnee(savedContrat.getAnnee());
+        dto.setLibelleEquipe(equipe != null ? equipe.getLibelle() : null);
+        dto.setNomSponsor(sponsor != null ? sponsor.getNom() : null);
+
+        return dto;
     }
 
 }

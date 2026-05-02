@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.example.springproject.Entities.Contrat;
 import org.example.springproject.Services.IContratService;
+import org.example.springproject.DTO.ContratDto;
+
 
 import java.util.List;
 
@@ -47,5 +49,14 @@ public class ContratController {
             @PathVariable Long idSponsor) {
         return contratService
                 .ajoutContratEtAffecterASponsorEtEquipe(contrat, idEquipe, idSponsor);
+    }
+    @PostMapping("/addAndAffect/byNames")
+    public ContratDto addAndAffectByNames(
+            @RequestBody Contrat contrat,
+            @RequestParam String libelleEquipe,
+            @RequestParam String nomSponsor,
+            @RequestParam String pays) {
+        return contratService.ajoutContratEtAffecterASponsorEtEquipe(
+                contrat, libelleEquipe, nomSponsor, pays);
     }
 }

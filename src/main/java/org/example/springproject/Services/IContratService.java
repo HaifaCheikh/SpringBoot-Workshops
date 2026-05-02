@@ -1,7 +1,9 @@
 package org.example.springproject.Services;
 
+import org.example.springproject.DTO.ContratDto;
 import org.example.springproject.Entities.Contrat;
 import java.util.List;
+import org.example.springproject.DTO.ContratDto;
 
 public interface IContratService {
 
@@ -22,4 +24,10 @@ public interface IContratService {
     void archiverContratsExpires();
 
     List<Contrat> getContratsActifs();
+
+    ContratDto ajoutContratEtAffecterASponsorEtEquipe(
+            Contrat contrat,
+            String libelleEquipe,
+            String nomSponsor,
+            String pays);
 }

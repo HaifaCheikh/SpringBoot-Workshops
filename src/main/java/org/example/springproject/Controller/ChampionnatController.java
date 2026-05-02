@@ -1,9 +1,12 @@
 package org.example.springproject.Controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.example.springproject.Entities.Championnat;
 import org.example.springproject.Services.IChampionnatService;
+import org.example.springproject.DTO.PiloteDto;
+
 
 import java.util.List;
 
@@ -59,5 +62,11 @@ public class ChampionnatController {
             @PathVariable Long idChampionnat) {
         return championnatService.affecterCourseAChampionnat(idCourse, idChampionnat);
     }
-
+    @GetMapping("/winners/{annee}")
+    @Operation(summary = "Liste des gagnants par championnat",
+            description = "Retourne le gagnant de chaque championnat" +
+                    " pour les années strictement supérieures à l'année donnée")
+    public List<PiloteDto> listeWinners(@PathVariable Integer annee) {
+        return championnatService.listeWinners(annee);
+    }
 }

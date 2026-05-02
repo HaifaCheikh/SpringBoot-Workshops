@@ -1,5 +1,6 @@
 package org.example.springproject.Services;
 
+import org.example.springproject.DTO.PiloteDto;
 import org.example.springproject.Entities.Championnat;
 import java.util.List;
 
@@ -20,5 +21,8 @@ public interface IChampionnatService {
     Championnat addChampionnatAndAssociatedCourses(Championnat championnat);
 
     String affecterCourseAChampionnat(Long idCourse, Long idChampionnat);
+
+    List<PiloteDto> listeWinners(Integer annee);
+
 
 }

@@ -1,11 +1,14 @@
 package org.example.springproject.Services;
 
 import lombok.AllArgsConstructor;
+import org.example.springproject.Entities.Pilote;
 import org.springframework.stereotype.Service;
 import org.example.springproject.Entities.Championnat;
 import org.example.springproject.Entities.Course;
 import org.example.springproject.Repository.ChampionnatRepository;
 import org.example.springproject.Repository.CourseRepository;
+import org.example.springproject.DTO.PiloteDto;
+
 
 import java.util.List;
 
@@ -66,6 +69,51 @@ public class ChampionnatService implements IChampionnatService {
             return "Course affectée avec succès au championnat";
         }
         return "Erreur : championnat ou course introuvable";
+    }
+
+    @Override
+    public List<PiloteDto> listeWinners(Integer annee) {
+        List<Championnat> championnats = championnatRepository
+                .findAll()
+                .stream()
+                .filter(c -> c.getAnnee() != null && c.getAnnee() > annee)
+                .collect(java.util.stream.Collectors.toList());
+
+        List<PiloteDto> winners = new java.util.ArrayList<>();
+
+        championnats.forEach(championnat -> {
+
+            if (championnat.getCourses() != null) {
+                championnat.getCourses().forEach(course -> {
+                    if (course.getPositions() != null) {
+                        course.getPositions().stream()
+                                .filter(p -> p.getClassement() != null
+                                        && p.getClassement() == 1)
+                                .forEach(position -> {
+                                    Pilote pilote = position.getPilote();
+                                    if (pilote != null) {
+                                        PiloteDto dto = new PiloteDto(
+                                                pilote.getLibelleP(),
+                                                pilote.getNbrPointsTotal(),
+                                                championnat.getLibelleC()
+                                        );
+                                        boolean exists = winners.stream()
+                                                .anyMatch(w ->
+                                                        w.getLibelleP()
+                                                                .equals(dto.getLibelleP())
+                                                                && w.getLibelleC()
+                                                                .equals(dto.getLibelleC()));
+                                        if (!exists) {
+                                            winners.add(dto);
+                                        }
+                                    }
+                                });
+                    }
+                });
+            }
+        });
+
+        return winners;
     }
 
 }
